@@ -36,30 +36,28 @@ module.exports.heartRateControllerAdd = (req, res) => {
 };
 
 module.exports.heartRateControllerRemove = (req, res) => {
-  const {id}=req.params;
-  const { heart_rate, body_temperature, patient_name, patient_frequent_sickness,patient_nid} = req.body; 
-
+  const {id} = req.params;
   db.run(
     'DELETE FROM patient WHERE id = ?',
-    [heart_rate, body_temperature, patient_name, patient_frequent_sickness, patient_nid],
+    [id],
     function (err) {
       if (err) {
         res.status(500).json({ error: err.message });
         return;
       }
       res.json({ message: 'User information deleted successfully' });
-    
-
     }
   );
 };
 
 
+
 module.exports.heartRateControllerUpdate = (req, res) => {
-  const { heart_rate, body_temperature, patient_name, patient_frequent_sickness,patient_nid } = req.body;
+  const {id}=req.params
+  const { heart_rate, body_temperature, patient_name, patient_frequent_sickness, patient_nid } = req.body;
   db.run(
     'UPDATE patient SET heart_rate = ?, body_temperature = ?, patient_name = ?, patient_frequent_sickness = ?, patient_nid = ? WHERE id = ?',
-    [heart_rate, body_temperature, patient_name, patient_frequent_sickness, patient_nid],
+    [heart_rate, body_temperature, patient_name, patient_frequent_sickness, patient_nid, id],
     function (err) {
       if (err) {
         res.status(500).json({ error: err.message });
